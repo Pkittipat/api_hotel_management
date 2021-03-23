@@ -20,7 +20,8 @@ func Migrate() {
 	Account := users.Account{}
 	Hotel := hotels.Hotel{}
 	Booking := bookings.Booking{}
+	Location := hotels.Location{}
 	
-	database.DB.AutoMigrate(&User, &Account, &Hotel, &Booking)
+	database.DB.AutoMigrate(&User, &Account, &Location, &Hotel, &Booking)
 	// createMockHotels()
 }
