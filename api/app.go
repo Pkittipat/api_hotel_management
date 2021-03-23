@@ -76,14 +76,24 @@ func GetListHotels(w http.ResponseWriter, r *http.Request) {
 
 func GetInfoHotel(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	var hotel hotels.ResponseHotel
-	query := database.DB.Table("hotels").Select("id, display_name, description, price").Where("id = ?", params["id"]).First(&hotel, params["id"])
+	var hotel hotels.Hotel
+	query := database.DB.First(&hotel, params["id"])
 	if query.Error != nil {
 		response := utils.HandleResponse("Not found", 404)
 		json.NewEncoder(w).Encode(response)
 		return
 	}
-	json.NewEncoder(w).Encode(&hotel)
+	var location hotels.ResponseLocation
+	database.DB.Table("locations").Select("latitude, longitude").Where("id = ?", hotel.LocationID).First(&location)
+	
+	resInfoHotel := &hotels.ResponseInfoHotel{
+		ID: hotel.ID,
+		DisplayName: hotel.DisplayName,
+		Description: hotel.Description,
+		Price: hotel.Price,
+		Location: location,
+	}
+	json.NewEncoder(w).Encode(&resInfoHotel)
 }
 
 
