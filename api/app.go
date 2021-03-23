@@ -30,6 +30,11 @@ func Run() {
 func AuthenticateUser(w http.ResponseWriter, r *http.Request) {
 	requestAuth := users.AuthenticateUserSerializer{}
 	json.NewDecoder(r.Body).Decode(&requestAuth)
+	err := requestAuth.Validate()
+	if err != nil {
+		json.NewEncoder(w).Encode(err)
+		return
+	}
 
 	response := users.AuthenticateUser(requestAuth.Username, requestAuth.Password)
 	json.NewEncoder(w).Encode(response)
@@ -38,7 +43,12 @@ func AuthenticateUser(w http.ResponseWriter, r *http.Request) {
 func RegistrationUser(w http.ResponseWriter, r *http.Request) {
 	requestRegister := users.SignupUserSerializer{}
 	json.NewDecoder(r.Body).Decode(&requestRegister)
-
+	err := requestRegister.Validate()
+	if err != nil {
+		json.NewEncoder(w).Encode(err)
+		return
+	}
+	
 	response := users.UserRegistration(&requestRegister)
 	json.NewEncoder(w).Encode(response)
 }
