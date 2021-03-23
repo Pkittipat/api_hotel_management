@@ -17,7 +17,8 @@ func Run() {
 	router.HandleFunc("/api/users/authenticate", AuthenticateUser).Methods("POST")
 	router.HandleFunc("/api/users/signup", RegistrationUser).Methods("POST")
 	router.HandleFunc("/api/users/me", GetUser).Methods("GET")
-	router.HandleFunc("/api/hotels", GetListHotels).Queries().Methods("GET")
+	router.HandleFunc("/api/hotels", GetListHotels).Methods("GET")
+	router.HandleFunc("/api/hotels/{id}", GetInfoHotel).Methods("GET")
 	fmt.Println("App is running on port :8000")
 	log.Fatal(http.ListenAndServe(":8000", router));
 }
@@ -68,4 +69,16 @@ func GetListHotels(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	json.NewEncoder(w).Encode(&hotels)
+}
+
+func GetInfoHotel(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	var hotel hotels.ResponseHotel
+	query := database.DB.Table("hotels").Select("id, display_name, description, price").Where("id = ?", params["id"]).First(&hotel, params["id"])
+	if query.Error != nil {
+		response := utils.HandleResponse("Not found", 404)
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+	json.NewEncoder(w).Encode(&hotel)
 }
