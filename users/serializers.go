@@ -23,7 +23,7 @@ type ResponseAccount struct {
 type RequestAccount struct {
 	FirstName string
 	LastName string
-	BirthDate *time.Time
+	BirthDate *time.Time `json:"birth_date"`
 }
 
 type AuthenticateUserSerializer struct {
@@ -66,7 +66,16 @@ func (self *SignupUserSerializer) Validate() map[string]interface{} {
 		return err
 	}
 
-	if self.Password != self.ConfirmPassword {
+	if self.ConfirmPassword == "" {
+		return utils.HandleResponse("Confirm password field is required", 400)
+
+	} else if self.Account.FirstName == "" {
+		return utils.HandleResponse("Firstname field is required", 400)
+
+	} else if self.Account.LastName == "" {
+		return utils.HandleResponse("Lastname field is required", 400)
+
+	} else if self.Password != self.ConfirmPassword {
 		return utils.HandleResponse("Password does not match", 400)
 	}
 
