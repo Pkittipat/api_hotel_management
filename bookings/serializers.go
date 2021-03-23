@@ -1,11 +1,11 @@
 package bookings
 
 type CreateBookingSerializer struct {
-	HotelID uint
+	HotelID uint `json:"hotel_id"`
 }
 
 type ResponseBooking struct {
-	ID uint
-	UserID uint
-	HotelID uint
+	ID uint `json:"id"`
+	UserID uint `json:"user_id"`
+	HotelID uint `json:"hotel_id"`
 }

@@ -8,17 +8,17 @@ import (
 
 type User struct {
 	*gorm.Model
-	Username string
-	Password string
-	Email *string
-	Account Account
-	Bookings []bookings.Booking
+	Username string	`json:"username"`
+	Password string	`json:"password"`
+	Email *string	`json:"email"`
+	Account Account	`json:"account"`
+	Bookings []bookings.Booking	`json:"bookings"`
 }
 
 type Account struct {
 	*gorm.Model
-	FirstName string
-	LastName string
-	BirthDate *time.Time
-	UserID uint
+	FirstName string `json:"first_name"`
+	LastName string `json:"last_name"`
+	BirthDate *time.Time `json:"birth_date"`
+	UserID uint `json:"user_id"`
 }

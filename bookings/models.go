@@ -6,6 +6,6 @@ import (
 
 type Booking struct {
 	*gorm.Model
-	UserID uint
-	HotelID uint
+	UserID uint `json:"user_id"`
+	HotelID uint `json:"hotel_id"`
 }

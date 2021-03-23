@@ -7,16 +7,16 @@ import (
 
 type Location struct {
 	*gorm.Model
-	Latitude *float64
-	Longitude *float64
-	Hotel Hotel
+	Latitude *float64 `json:"latitude"`
+	Longitude *float64 `json:"longitude"`
+	Hotel Hotel `json:"hotel"`
 }
 
 type Hotel struct {
 	*gorm.Model
-	DisplayName string
-	Description string
-	Price float64
-	LocationID *uint
-	Bookings []bookings.Booking
+	DisplayName string `json:"display_name"`
+	Description string `json:"description"`
+	Price float64 `json:"price"`
+	LocationID *uint `json:"location_id"`
+	Bookings []bookings.Booking `json:"bookings"`
 }
