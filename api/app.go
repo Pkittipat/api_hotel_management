@@ -55,6 +55,11 @@ func RegistrationUser(w http.ResponseWriter, r *http.Request) {
 
 func GetUser(w http.ResponseWriter, r *http.Request) {
 	auth := r.Header.Get("Authorization")
+	if auth == "" {
+		response := utils.HandleResponse("Unauthorize", 400)
+		json.NewEncoder(w).Encode(response)
+		return
+	}
 	user := users.GetUser(auth)
 	json.NewEncoder(w).Encode(&user)
 }
@@ -125,7 +130,6 @@ func CreateBooking(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(&reqBooking)
 
 	user_id := tokenData["user_id"].(float64)
-	fmt.Println(int(user_id))
 	var user users.User
 	database.DB.First(&user, int(user_id))
 
