@@ -21,7 +21,7 @@ Don't use one commit to finish the project. 😡
 
 - [ ]  Design system with global css ✱.
 - [X]  List Hotel (Show Name, Price, Detail).
-- [ ]  Search Hotel (By Name, By Detail).
+- [X]  Search Hotel (By Name, By Detail).
 - [X]  Hotel Info (Show Name, Price, Detail, Map (eg. Google Map).
 - [X]  Login by using username and password.
 - [X]  Register (eg. Name, Last Name, Birth Data, and email).
