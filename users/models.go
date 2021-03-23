@@ -3,6 +3,7 @@ package users
 import (
 	"time"
 	"gorm.io/gorm"
+	"hotel_management/bookings"
 )
 
 type User struct {
@@ -11,6 +12,7 @@ type User struct {
 	Password string
 	Email *string
 	Account Account
+	Bookings []bookings.Booking
 }
 
 type Account struct {

@@ -2,6 +2,7 @@ package users
 
 import (
 	"time"
+	"hotel_management/hotels"
 )
 
 type ResponseUser struct {
@@ -34,4 +35,11 @@ type SignupUserSerializer struct {
 	Password string
 	Email *string
 	Account RequestAccount
+}
+
+
+type ResponseBooking struct {
+	ID uint
+	User ResponseUser
+	Hotel hotels.ResponseHotel
 }

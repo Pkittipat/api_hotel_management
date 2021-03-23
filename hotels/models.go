@@ -2,6 +2,7 @@ package hotels
 
 import (
 	"gorm.io/gorm"
+	"hotel_management/bookings"
 )
 
 type Hotel struct {
@@ -9,4 +10,5 @@ type Hotel struct {
 	DisplayName string
 	Description string
 	Price float64
+	Bookings []bookings.Booking
 }
