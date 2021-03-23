@@ -4,6 +4,7 @@ import (
 	"hotel_management/users"
 	"hotel_management/hotels"
 	"hotel_management/database"
+	"hotel_management/bookings"
 )
 
 func createMockHotels() {
@@ -15,10 +16,11 @@ func createMockHotels() {
 }
 
 func Migrate() {
-	user := users.User{}
-	account := users.Account{}
-	hotel := hotels.Hotel{}
+	User := users.User{}
+	Account := users.Account{}
+	Hotel := hotels.Hotel{}
+	Booking := bookings.Booking{}
 	
-	database.DB.AutoMigrate(&user, &account, &hotel)
+	database.DB.AutoMigrate(&User, &Account, &Hotel, &Booking)
 	// createMockHotels()
 }
