@@ -69,6 +69,9 @@ func (self *SignupUserSerializer) Validate() map[string]interface{} {
 	if self.ConfirmPassword == "" {
 		return utils.HandleResponse("Confirm password field is required", 400)
 
+	} else if self.Email == nil {
+		return utils.HandleResponse("Email field is required", 400)
+		
 	} else if self.Account.FirstName == "" {
 		return utils.HandleResponse("Firstname field is required", 400)
 
