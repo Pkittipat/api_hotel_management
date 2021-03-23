@@ -7,43 +7,43 @@ import (
 )
 
 type ResponseUser struct {
-	ID uint
-	Username string
-	Email *string
-	Account ResponseAccount
+	ID uint `json:"id"`
+	Username string	`json:"username"`
+	Email *string `json:"email"`
+	Account ResponseAccount `json:"account"`
 }
 
 type ResponseAccount struct {
-	ID uint
-	FirstName string
-	LastName string
-	BirthDate *time.Time
+	ID uint `json:"id"`
+	FirstName string `json:"first_name"`
+	LastName string `json:"last_name"`
+	BirthDate *time.Time `json:"birth_date,omitempty"`
 }
 
 type RequestAccount struct {
-	FirstName string
-	LastName string
-	BirthDate *time.Time `json:"birth_date"`
+	FirstName string `json:"first_name"`
+	LastName string `json:"last_name"`
+	BirthDate *time.Time `json:"birth_date,omitempty"`
 }
 
 type AuthenticateUserSerializer struct {
-	Username string
-	Password string
+	Username string `json:"username"`
+	Password string	`json:"password"`
 }
 
 type SignupUserSerializer struct {
-	Username string
-	Password string
-	ConfirmPassword string
-	Email *string
-	Account RequestAccount
+	Username string `json:"username"`
+	Password string	`json:"password"`
+	ConfirmPassword string `json:"confirm_password"`
+	Email *string `json:"email"`
+	Account RequestAccount `json:"account"`
 }
 
 
 type ResponseBooking struct {
-	ID uint
-	User ResponseUser
-	Hotel hotels.ResponseHotel
+	ID uint `json:"id"`
+	User ResponseUser `json:"user"`
+	Hotel hotels.ResponseHotel `json:"hotel"`
 }
 
 func validateUsernameAndPassword(username, password string) map[string]interface{} {
