@@ -8,9 +8,15 @@ import (
 )
 
 func createMockHotels() {
+	locations := &[2]hotels.Location{
+		{Latitude: 13.562505246598713, Longitude: 100.27970043047608},
+		{Latitude: 13.551410693364241, Longitude: 100.27834312691078},
+	}
+	database.DB.Create(&locations)
+	
 	hotels := &[2]hotels.Hotel{
-		{DisplayName: "The Eight Serviced Apartment", Description: "Mahachai, Mueang Samut Sakhon District, Samut Sakhon 74000•092 470 2888", Price: 851},
-		{DisplayName: "Thongchen Residence", Description: "Contemporary serviced apartments with kitchenettes, flat-screens & free Wi-Fi, as well as parking.", Price: 850},
+		{DisplayName: "The Eight Serviced Apartment", Description: "Mahachai, Mueang Samut Sakhon District, Samut Sakhon 74000•092 470 2888", Price: 851, LocationID: &locations[0].ID},
+		{DisplayName: "Thongchen Residence", Description: "Contemporary serviced apartments with kitchenettes, flat-screens & free Wi-Fi, as well as parking.", Price: 850, LocationID: &locations[1].ID},
 	}
 	database.DB.Create(&hotels)
 }
