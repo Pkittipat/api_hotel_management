@@ -57,6 +57,11 @@ func AuthenticateUser(username, password string) map[string]interface{} {
 
 func UserRegistration(data *SignupUserSerializer) map[string]interface{} {
 	generatePassword := utils.HashAndSalt([]byte(data.Password))
+	var usernameAlreadyUsed User
+	alreadyExist := database.DB.Where("username = ?", data.Username).First(&usernameAlreadyUsed)
+	if alreadyExist.Error == nil {
+		return utils.HandleResponse("Username already exist", 400)
+	}
 	user := &User{
 		Username: data.Username, 
 		Password: generatePassword, 
