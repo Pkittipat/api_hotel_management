@@ -1,5 +1,9 @@
 package hotels
 
+type ResponseDetail struct {
+	Title string `json:"title"`
+}
+
 type ResponseLocation struct {
 	Latitude *float64 `json:"latitude"`
 	Longitude *float64 `json:"longitude"`
@@ -18,4 +22,5 @@ type ResponseInfoHotel struct {
 	Description string `json:"description"`
 	Price float64 `json:"price"`
 	Location ResponseLocation `json:"location"`
+	Details []ResponseDetail `json:"details"`
 }
