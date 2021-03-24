@@ -54,5 +54,5 @@ func Migrate() {
 	Detail := hotels.Detail{}
 	
 	database.DB.AutoMigrate(&User, &Account, &Location, &Detail, &Hotel, &Booking)
-	createMockHotels()
+	// createMockHotels()
 }
