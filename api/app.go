@@ -25,8 +25,8 @@ func Run() {
 	router.HandleFunc("/api/hotels", GetListHotels).Methods("GET")
 	router.HandleFunc("/api/hotels/{id}", GetInfoHotel).Methods("GET")
 	router.HandleFunc("/api/bookings", CreateBooking).Methods("POST")
-	fmt.Println("App is running on port :8000")
-	log.Fatal(http.ListenAndServe(":8000", router));
+	fmt.Println("App is running on port :8080")
+	log.Fatal(http.ListenAndServe(":8080", router));
 }
 
 
@@ -72,8 +72,8 @@ func GetListHotels(w http.ResponseWriter, r *http.Request) {
 	queryset := database.DB.Table("hotels").Select(
 		"hotels.id, hotels.display_name, hotels.description, hotels.price").Joins(
 			"JOIN hotel_detail ON hotel_detail.hotel_id = hotels.id").Joins(
-				"JOIN details ON details.id = hotel_detail.detail_Id")
-
+				"JOIN details ON details.id = hotel_detail.detail_Id").Group("hotels.id").Order("hotels.id")
+	
 	search_name := r.FormValue("search_name")
 	search_detail := r.FormValue("search_detail")
 	
@@ -82,6 +82,7 @@ func GetListHotels(w http.ResponseWriter, r *http.Request) {
 		value := fmt.Sprintf("%%%s%%", r.FormValue("search_name"))
 		queryset.Where("hotels.display_name ILIKE ?", value)
 	}
+
 	if search_detail != "" {
 		values := strings.Split(search_detail, ",")	
 		for _, value := range values {
@@ -89,7 +90,7 @@ func GetListHotels(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	queryset.Scan(&resHotels)
+	queryset.Find(&resHotels)
 	
 	if queryset.Error != nil {
 		json.NewEncoder(w).Encode(utils.HandleResponse("Not found", 404))
