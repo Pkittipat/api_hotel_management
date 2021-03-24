@@ -23,4 +23,5 @@ type ResponseInfoHotel struct {
 	Price float64 `json:"price"`
 	Location ResponseLocation `json:"location"`
 	Details []ResponseDetail `json:"details"`
+	GoogleMapURL string `json:"google_map_url"`
 }

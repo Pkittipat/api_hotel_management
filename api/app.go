@@ -14,6 +14,8 @@ import (
 	"strings"
 )
 
+var GoogleMapURL = "https://www.google.com/maps/search/?api=1&query=%v,%v"
+
 func Run() {
 	router := mux.NewRouter()
 	router.HandleFunc("/api/users/authenticate", AuthenticateUser).Methods("POST")
@@ -118,6 +120,7 @@ func GetInfoHotel(w http.ResponseWriter, r *http.Request) {
 		Price: hotel.Price,
 		Location: location,
 		Details: details,
+		GoogleMapURL: fmt.Sprintf(GoogleMapURL, *location.Latitude, *location.Longitude),
 	}
 	json.NewEncoder(w).Encode(&resInfoHotel)
 }
