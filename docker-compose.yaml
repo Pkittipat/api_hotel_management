@@ -4,7 +4,7 @@ services:
   db:
     image: postgres:11
     environment:
-      - POSTGRES_DB=devhotel
+      - POSTGRES_DB=hotelmanagement
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports: 
