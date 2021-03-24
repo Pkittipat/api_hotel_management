@@ -171,7 +171,9 @@ func CreateBooking(w http.ResponseWriter, r *http.Request) {
 		HotelID: hotel.ID}
 	
 	database.DB.Create(&booking)
-	response := &users.ResponseBooking{
+
+	var response = map[string]interface{}{"message": "all is fine", "status_code": 200}
+	response["data"] = &users.ResponseBooking{
 		ID: booking.ID,
 		User: *responseUser,
 		Hotel: hotel,
