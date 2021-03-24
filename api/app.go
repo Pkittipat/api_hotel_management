@@ -11,6 +11,7 @@ import (
 	"hotel_management/database"
 	"hotel_management/utils"
 	"encoding/json"
+	"strings"
 )
 
 func Run() {
@@ -65,28 +66,34 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetListHotels(w http.ResponseWriter, r *http.Request) {
-	hotels := &[]hotels.ResponseHotel{}
-	queryset := database.DB.Table("hotels").Select("id, display_name, description, price")
+	resHotels := &[]hotels.ResponseHotel{}
+	queryset := database.DB.Table("hotels").Select(
+		"hotels.id, hotels.display_name, hotels.description, hotels.price").Joins(
+			"JOIN hotel_detail ON hotel_detail.hotel_id = hotels.id").Joins(
+				"JOIN details ON details.id = hotel_detail.detail_Id")
 
 	search_name := r.FormValue("search_name")
-	search_description := r.FormValue("search_desc")
-
+	search_detail := r.FormValue("search_detail")
+	
+	
 	if search_name != "" {
 		value := fmt.Sprintf("%%%s%%", r.FormValue("search_name"))
-		queryset.Where("display_name ILIKE ?", value)
+		queryset.Where("hotels.display_name ILIKE ?", value)
+	}
+	if search_detail != "" {
+		values := strings.Split(search_detail, ",")	
+		for _, value := range values {
+			queryset.Where("details.title ILIKE ?", value)
+		}
 	}
 
-	if search_description != "" {
-		value := fmt.Sprintf("%%%s%%", r.FormValue("search_desc"))
-		queryset.Where("description ILIKE ?", value)
-	}
+	queryset.Scan(&resHotels)
 	
-	queryset.Find(&hotels)
 	if queryset.Error != nil {
 		json.NewEncoder(w).Encode(utils.HandleResponse("Not found", 404))
 		return
 	}
-	json.NewEncoder(w).Encode(&hotels)
+	json.NewEncoder(w).Encode(&resHotels)
 }
 
 func GetInfoHotel(w http.ResponseWriter, r *http.Request) {
@@ -101,12 +108,16 @@ func GetInfoHotel(w http.ResponseWriter, r *http.Request) {
 	var location hotels.ResponseLocation
 	database.DB.Table("locations").Select("latitude, longitude").Where("id = ?", hotel.LocationID).First(&location)
 	
+	var details []hotels.ResponseDetail
+	database.DB.Model(&hotel).Association("Details").Find(&details)
+
 	resInfoHotel := &hotels.ResponseInfoHotel{
 		ID: hotel.ID,
 		DisplayName: hotel.DisplayName,
 		Description: hotel.Description,
 		Price: hotel.Price,
 		Location: location,
+		Details: details,
 	}
 	json.NewEncoder(w).Encode(&resInfoHotel)
 }
