@@ -23,7 +23,7 @@ func createMockHotels() {
 			Price: 851, 
 			LocationID: &locations[0].ID,
 			Details: []hotels.Detail{
-				{Title: "Free WiFi"},
+				{Title: "Mini-fridge"},
 				{Title: "Safe"},
 				{Title: "Shower"},
 			},
@@ -35,6 +35,7 @@ func createMockHotels() {
 			LocationID: &locations[1].ID,
 			Details: []hotels.Detail{
 				{Title: "Mini-fridge"},
+				{Title: "Free WiFi"},
 				{Title: "Safe"},
 				{Title: "Shower"},
 				{Title: "Satellite LCD TV"},
