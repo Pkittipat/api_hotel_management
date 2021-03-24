@@ -32,7 +32,7 @@ If you have any idea about the new feature. Feel free to add. 🙂
 
 ### Non-functional
 
-- [ ]  Validate all text field such as duplicate email when registration.
+- [X]  Validate all text field such as duplicate email when registration.
 - [ ]  Show Available Hotel.
 - [ ]  Show the list of [sidebar](https://material.io/components/navigation-drawer).
 
