@@ -143,6 +143,12 @@ func CreateBooking(w http.ResponseWriter, r *http.Request) {
 	var reqBooking bookings.CreateBookingSerializer
 	json.NewDecoder(r.Body).Decode(&reqBooking)
 
+	err := reqBooking.Validate()
+	if err != nil {
+		json.NewEncoder(w).Encode(err)
+		return
+	}
+
 	user_id := tokenData["user_id"].(float64)
 	var user users.User
 	database.DB.First(&user, int(user_id))
