@@ -9,11 +9,10 @@ type CreateBookingSerializer struct {
 }
 
 type ResponseBooking struct {
-	ID uint `json:"id"`
+	ID uint `json:"booking_id"`
 	UserID uint `json:"user_id"`
 	HotelID uint `json:"hotel_id"`
 }
-
 
 func (self *CreateBookingSerializer) Validate() map[string]interface{} {
 	if self.HotelID == 0 {

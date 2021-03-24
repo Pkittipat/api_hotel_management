@@ -199,5 +199,7 @@ func GetListUserBookings(w http.ResponseWriter, r *http.Request) {
 
 	database.DB.Table("bookings").Select("id, user_Id, hotel_id").Where("user_id = ?", int(user_id)).Scan(&bookings)
 	
-	json.NewEncoder(w).Encode(&bookings)
+	var response = map[string]interface{}{"message": "all is fine", "status_code": 200}
+	response["data"] = &bookings
+	json.NewEncoder(w).Encode(&response)
 }
