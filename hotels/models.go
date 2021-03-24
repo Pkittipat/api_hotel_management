@@ -12,6 +12,11 @@ type Location struct {
 	Hotel Hotel `json:"hotel"`
 }
 
+type Detail struct {
+	*gorm.Model
+	Title string `json:"title"`
+}
+
 type Hotel struct {
 	*gorm.Model
 	DisplayName string `json:"display_name"`
@@ -19,4 +24,5 @@ type Hotel struct {
 	Price float64 `json:"price"`
 	LocationID *uint `json:"location_id"`
 	Bookings []bookings.Booking `json:"bookings"`
+	Details []Detail `json:"detials" gorm:"many2many:hotel_detail"`
 }
